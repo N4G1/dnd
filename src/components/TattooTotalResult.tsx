@@ -1,9 +1,9 @@
-import { InkRarity, KitRarity, Price, Rarity } from "../interfaces";
+import { InkRarity, KitRarity, Price, CraftingRarity } from "../interfaces";
 
 interface Props {
-  tattooRarity: Rarity;
+  tattooRarity: CraftingRarity;
   rune: {
-    rarity: Rarity;
+    rarity: CraftingRarity;
     count: number;
   };
   inkRarity: InkRarity;
@@ -16,7 +16,7 @@ const TattooTotalResult = ({ tattooRarity, rune, inkRarity, kitRarity }: Props) 
   const BaseTattooGold = 100;
   const BaseTattooHours = BaseTattooDays * 8;
 
-  const tattooCost: Record<Rarity, Price> = {
+  const tattooCost: Record<CraftingRarity, Price> = {
     Common: {
       Days: BaseTattooDays,
       DC: BaseTattooDC,
@@ -48,7 +48,7 @@ const TattooTotalResult = ({ tattooRarity, rune, inkRarity, kitRarity }: Props) 
       Hours: BaseTattooHours * 16,
     },
   };
-  const runeCost: Record<Rarity, number> = {
+  const runeCost: Record<CraftingRarity, number> = {
     Common: 2,
     Uncommon: 4,
     Rare: 6,
@@ -81,7 +81,7 @@ const TattooTotalResult = ({ tattooRarity, rune, inkRarity, kitRarity }: Props) 
       <p>{`Rune: ${rune.rarity} x ${rune.count} = ${runeDC}`}</p>
       <p>{`Ink: ${inkRarity} = ${inkDC}`}</p>
       <p>{`Kit: ${kitRarity} = ${kitDC}`}</p>
-      <p>----------------------------------------</p>
+      <hr></hr>
       <p>{`Total DC: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
       <p>{`Total Time: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
     </div>

@@ -3,16 +3,16 @@ import "./App.css";
 import EntityColumn from "./components/EntityColumn";
 import TattooTotalResult from "./components/TattooTotalResult";
 import Header from "./components/Header";
-import { InkRarity, KitRarity, Rarity } from "./interfaces";
+import { CraftingRarity, InkRarity, KitRarity } from "./interfaces";
 
 const App = () => {
-  const [tattooRarity, setTattooRarity] = useState<Rarity>("Common");
-  const [runeRarity, setRuneRarity] = useState<Rarity>("Common");
+  const [tattooRarity, setTattooRarity] = useState<CraftingRarity>("Common");
+  const [runeRarity, setRuneRarity] = useState<CraftingRarity>("Common");
   const [inkRarity, setInkRarity] = useState<InkRarity>("Magic Ink");
   const [kitRarity, setKitRarity] = useState<KitRarity>("Tattooers Kit");
   const [header, setHeader] = useState<KitRarity>("Tattooers Kit");
 
-  const rarity: Rarity[] = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary"];
+  const rarity: CraftingRarity[] = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary"];
   const ink: InkRarity[] = ["Magic Ink", "Dragons Blood", "Krakens Ink", "Planetars Blood", "Gods Blood"];
   const kit: KitRarity[] = ["Tattooers Kit", "Magical TK", "Magical TK +1", "Magical TK +2", "Magical TK +3"];
 
