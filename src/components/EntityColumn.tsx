@@ -17,9 +17,10 @@ const EntityColumn = ({ callback, items, name }: Props) => {
 
   return (
     <div className={"column"}>
-      <div>{name}</div>
-      {items.map((item) => (
+      <span>{name}</span>
+      {items.map((item, idx) => (
         <button
+          key={idx}
           value={item}
           // @ts-ignore
           onClick={onClickHeh}
