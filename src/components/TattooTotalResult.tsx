@@ -81,7 +81,7 @@ const TattooTotalResult = ({ tattooRarity, rune, inkRarity, kitRarity }: Props) 
       <p>{`Rune: ${rune.rarity} x ${rune.count} = ${runeDC}`}</p>
       <p>{`Ink: ${inkRarity} = ${inkDC}`}</p>
       <p>{`Kit: ${kitRarity} = ${kitDC}`}</p>
-      <hr></hr>
+      <hr />
       <p>{`Total DC: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
       <p>{`Total Time: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
     </div>
