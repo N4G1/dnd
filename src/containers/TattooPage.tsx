@@ -2,7 +2,6 @@ import { useState } from "react";
 import "../App.css";
 import EntityColumn from "../components/EntityColumn";
 import TattooTotalResult from "../components/TattooTotalResult";
-import Header from "../components/Header";
 import { CraftingRarity, InkRarity, KitRarity } from "../interfaces";
 
 const TattooPage = () => {
@@ -10,7 +9,6 @@ const TattooPage = () => {
   const [runeRarity, setRuneRarity] = useState<CraftingRarity>("Common");
   const [inkRarity, setInkRarity] = useState<InkRarity>("Magic Ink");
   const [kitRarity, setKitRarity] = useState<KitRarity>("Tattooers Kit");
-  const [header, setHeader] = useState<KitRarity>("Tattooers Kit");
 
   const rarity: CraftingRarity[] = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary"];
   const ink: InkRarity[] = ["Magic Ink", "Dragons Blood", "Krakens Ink", "Planetars Blood", "Gods Blood"];
@@ -18,7 +16,6 @@ const TattooPage = () => {
 
   return (
     <header className="App-header">
-      <Header asd={() => {}} />
       <div className={"body"}>
         <EntityColumn name={"Tattoo"} callback={setTattooRarity} items={rarity} />
         <EntityColumn name={"Runes"} callback={setRuneRarity} items={rarity} />
