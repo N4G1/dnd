@@ -1,89 +1,67 @@
-import { InkRarity, KitRarity, Price, CraftingRarity } from "../interfaces";
+import { InkRarity, KitRarity, CraftingRarity } from "../interfaces";
+import {
+  defaultPermanentTattooTimeDaysPerRarity,
+  defaultRuneDCPerRarity,
+  defaultTattooDCPerRarity,
+  defaultTattooInkDCDecreasePerRarity,
+  defaultTattooKitDCDecreasePerRarity,
+  defaultTemporaryTattooTimeDaysPerRarity,
+} from "../utils/defaultData";
+import { CRAFTING_DAY_AS_HOURS } from "../utils/constants";
+import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
+import { useTattoo, useTattooUpdate } from "./TattooProvider";
 
 interface Props {
   tattooRarity: CraftingRarity;
-  rune: {
-    rarity: CraftingRarity;
-    count: number;
-  };
+  runeCount: Record<CraftingRarity, number>;
   inkRarity: InkRarity;
   kitRarity: KitRarity;
 }
 
-const TattooTotalResult = ({ tattooRarity, rune, inkRarity, kitRarity }: Props) => {
-  const BaseTattooDays = 2;
-  const BaseTattooDC = 13;
-  const BaseTattooGold = 100;
-  const BaseTattooHours = BaseTattooDays * 8;
+const TattooTotalResult = ({ tattooRarity, runeCount, inkRarity, kitRarity }: Props) => {
+  const isPermanent = useTattoo();
+  const toggleTattooTime = useTattooUpdate();
 
-  const tattooCost: Record<CraftingRarity, Price> = {
-    Common: {
-      Days: BaseTattooDays,
-      DC: BaseTattooDC,
-      Gold: BaseTattooGold,
-      Hours: BaseTattooHours,
-    },
-    Uncommon: {
-      Days: BaseTattooDays * 2,
-      DC: BaseTattooDC + 3,
-      Gold: BaseTattooGold * 4,
-      Hours: BaseTattooHours * 2,
-    },
-    Rare: {
-      Days: BaseTattooDays * 3,
-      DC: BaseTattooDC + 7,
-      Gold: BaseTattooGold * 4,
-      Hours: BaseTattooHours * 3,
-    },
-    "Very Rare": {
-      Days: BaseTattooDays * 8,
-      DC: BaseTattooDC + 12,
-      Gold: BaseTattooGold * 4,
-      Hours: BaseTattooHours * 8,
-    },
-    Legendary: {
-      Days: BaseTattooDays * 16,
-      DC: BaseTattooDC + 17,
-      Gold: BaseTattooGold * 4,
-      Hours: BaseTattooHours * 16,
-    },
-  };
-  const runeCost: Record<CraftingRarity, number> = {
-    Common: 2,
-    Uncommon: 4,
-    Rare: 6,
-    "Very Rare": 10,
-    Legendary: 15,
-  };
-  const inkCost: Record<InkRarity, number> = {
-    "Magic Ink": -0,
-    "Dragons Blood": -2,
-    "Krakens Ink": -4,
-    "Planetars Blood": -8,
-    "Gods Blood": -15,
-  };
-  const kitCost: Record<KitRarity, number> = {
-    "Tattooers Kit": -0,
-    "Magical TK": -2,
-    "Magical TK +1": -3,
-    "Magical TK +2": -4,
-    "Magical TK +3": -5,
-  };
+  const getCurrentRuneSelectionDC = (runeObj: Record<CraftingRarity, number>): number =>
+    Object.entries(runeObj)
+      //@ts-ignore
+      .map(([k, v]) => defaultRuneDCPerRarity[k] * v)
+      .reduce((a, b) => a + b, 0);
 
-  const tattoDC = tattooCost[tattooRarity];
-  const runeDC = runeCost[rune.rarity] * rune.count;
-  const inkDC = inkCost[inkRarity];
-  const kitDC = kitCost[kitRarity];
+  const tattooDC = defaultTattooDCPerRarity[tattooRarity];
+  const tattooTimeDays = isPermanent
+    ? defaultPermanentTattooTimeDaysPerRarity[tattooRarity]
+    : defaultTemporaryTattooTimeDaysPerRarity[tattooRarity];
+  const tattooTimeHours = tattooTimeDays * CRAFTING_DAY_AS_HOURS;
+  const runeDC = getCurrentRuneSelectionDC(runeCount);
+  const inkDC = defaultTattooInkDCDecreasePerRarity[inkRarity];
+  const kitDC = defaultTattooKitDCDecreasePerRarity[kitRarity];
+
+  const generateRuneOverview = (runeObj: Record<CraftingRarity, number>) => {
+    return (
+      Object.entries(runeObj)
+        .filter(([k, v]) => v !== 0)
+        //@ts-ignore
+        .map(([k, v], id) => <p key={id}>{`Rune: ${k} x ${v} = ${defaultRuneDCPerRarity[k] * v}`}</p>)
+    );
+  };
 
   return (
-    <div className={"column-sum"}>
-      <p>{`Tattoo: ${tattooRarity} = ${tattoDC?.DC}`}</p>
-      <p>{`Rune: ${rune.rarity} x ${rune.count} = ${runeDC}`}</p>
-      <p>{`Ink: ${inkRarity} = ${inkDC}`}</p>
-      <p>{`Kit: ${kitRarity} = ${kitDC}`}</p>
+    <div className="Tattoo-summary">
+      <div className="Tattoo-advanced">
+        <ToggleSwitch on={isPermanent} onClick={toggleTattooTime} labelOn="permanent" labelOff="temporary" />
+      </div>
       <hr />
-      <p>{`Total DC: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
-      <p>{`Total Time: ${tattoDC?.DC + runeDC + inkDC + kitDC}`}</p>
+      <div className="column-sum">
+        <p>{`Tattoo: ${tattooRarity} = ${tattooDC}`}</p>
+        {generateRuneOverview(runeCount)}
+        <p>{`Ink: ${inkRarity} = ${inkDC}`}</p>
+        <p>{`Kit: ${kitRarity} = ${kitDC}`}</p>
+        <hr />
+        <p>{`Total DC: ${tattooDC + runeDC + inkDC + kitDC}`}</p>
+        <p>{`Total Time(d): ${tattooTimeDays}`}</p>
+        <p>{`Total Time(h): ${tattooTimeHours}`}</p>
+      </div>
     </div>
   );
 };
