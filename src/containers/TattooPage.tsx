@@ -1,12 +1,14 @@
 import { useState } from "react";
-import "../App.css";
-import EntityColumn from "../components/EntityColumn";
-import TattooTotalResult from "../components/TattooTotalResult";
-import { CraftingRarity, InkRarity, KitRarity } from "../interfaces";
+import "../../App.css";
+import EntityRow from "../../components/EntityRow";
+import RuneRow from "../../components/RuneRow";
+import TattooTotalResult from "../../components/TattooTotalResult";
+import { CraftingRarity, InkRarity, KitRarity } from "../../interfaces";
+import { defaultTattooPointsPerRarity } from "../../utils/defaultData";
 
 const TattooPage = () => {
   const [tattooRarity, setTattooRarity] = useState<CraftingRarity>("Common");
-  const [runeRarity, setRuneRarity] = useState<CraftingRarity>("Common");
+  const [runes, setRunes] = useState<Partial<Record<CraftingRarity, number>>[]>([]);
   const [inkRarity, setInkRarity] = useState<InkRarity>("Magic Ink");
   const [kitRarity, setKitRarity] = useState<KitRarity>("Tattooers Kit");
 
@@ -14,21 +16,18 @@ const TattooPage = () => {
   const ink: InkRarity[] = ["Magic Ink", "Dragons Blood", "Krakens Ink", "Planetars Blood", "Gods Blood"];
   const kit: KitRarity[] = ["Tattooers Kit", "Magical TK", "Magical TK +1", "Magical TK +2", "Magical TK +3"];
 
+  const tattooPointsPerRarity = defaultTattooPointsPerRarity[tattooRarity] ?? 0;
+
   return (
-    <header className="App-header">
-      <div className={"body"}>
-        <EntityColumn name={"Tattoo"} callback={setTattooRarity} items={rarity} />
-        <EntityColumn name={"Runes"} callback={setRuneRarity} items={rarity} />
-        <EntityColumn name={"Ink"} callback={setInkRarity} items={ink} />
-        <EntityColumn name={"Kit"} callback={setKitRarity} items={kit} />
-        <TattooTotalResult
-          tattooRarity={tattooRarity}
-          inkRarity={inkRarity}
-          kitRarity={kitRarity}
-          rune={{ rarity: runeRarity, count: 1 }}
-        />
+    <div className="Tattoo-page">
+      <div className="Tattoo-logic">
+        <EntityRow name={`Tattoo (${tattooPointsPerRarity} pts)`} callback={setTattooRarity} items={rarity} />
+        <RuneRow name={"Runes"} callback={setRunes} items={rarity} pointsPerTattooRarity={tattooPointsPerRarity} />
+        <EntityRow name={"Ink"} callback={setInkRarity} items={ink} />
+        <EntityRow name={"Kit"} callback={setKitRarity} items={kit} />
       </div>
-    </header>
+      <TattooTotalResult tattooRarity={tattooRarity} inkRarity={inkRarity} kitRarity={kitRarity} runes={runes} />
+    </div>
   );
 };
 

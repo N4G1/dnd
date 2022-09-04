@@ -4,9 +4,10 @@ interface Props {
   callback: Function;
   items: string[];
   name: string;
+  isRuneRow?: boolean;
 }
 
-const EntityColumn = ({ callback, items, name }: Props) => {
+const EntityRow = ({ callback, items, name, isRuneRow }: Props) => {
   const [entity, setEntity] = useState(undefined);
 
   const onClickHeh = (e: any) => {
@@ -15,9 +16,11 @@ const EntityColumn = ({ callback, items, name }: Props) => {
     callback(newValue);
   };
 
+  if (isRuneRow) return <></>;
+
   return (
-    <div className={"column"}>
-      <span>{name}</span>
+    <div className="row">
+      <div>{name}</div>
       {items.map((item, idx) => (
         <button
           key={idx}
@@ -33,4 +36,4 @@ const EntityColumn = ({ callback, items, name }: Props) => {
   );
 };
 
-export default EntityColumn;
+export default EntityRow;
