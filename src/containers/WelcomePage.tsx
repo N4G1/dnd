@@ -5,10 +5,14 @@ const WelcomePage = () => {
     <>
       <h1> Welcome to DnD Shenanigans </h1>
       <p>
-        <Link to="/dnd/tattoos"> Tattoos </Link>
+        <Link to="/dnd/tattoos" className="App-link">
+          Tattoos
+        </Link>
       </p>
       <p>
-        <Link to="/dnd/crafting"> Crafting </Link>
+        <Link to="/dnd/crafting" className="App-link">
+          Crafting
+        </Link>
       </p>
     </>
   );

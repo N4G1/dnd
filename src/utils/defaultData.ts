@@ -1,4 +1,4 @@
-import { CraftingRarity } from "../interfaces";
+import { CraftingRarity, InkRarity, KitRarity } from "../interfaces";
 import { TATTOO_CRAFTING_TIME_MODIFIER, TEMPORARY_TATTOO_CRAFTING_TIME_MODIFIER } from "./constants";
 
 export const defaultCraftingTimeDaysPerRarity: Record<CraftingRarity, number> = {
@@ -55,4 +55,28 @@ export const defaultRuneDCPerRarity: Record<CraftingRarity, number> = {
   Rare: 6,
   "Very Rare": 10,
   Legendary: 15,
+};
+
+export const defaultTattooInkDCDecreasePerRarity: Record<InkRarity, number> = {
+  "Magic Ink": -0,
+  "Dragons Blood": -2,
+  "Krakens Ink": -4,
+  "Planetars Blood": -8,
+  "Gods Blood": -15,
+};
+
+export const defaultTattooKitDCDecreasePerRarity: Record<KitRarity, number> = {
+  "Tattooers Kit": -0,
+  "Magical TK": -2,
+  "Magical TK +1": -3,
+  "Magical TK +2": -4,
+  "Magical TK +3": -5,
+};
+
+export const defaultRuneCountState: Record<CraftingRarity, number> = {
+  Common: 0,
+  Uncommon: 0,
+  Rare: 0,
+  "Very Rare": 0,
+  Legendary: 0,
 };

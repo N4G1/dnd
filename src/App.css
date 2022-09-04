@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -18,27 +15,38 @@
 }
 
 .Active {
-  background-color: aqua;
-  width: 100px;
+  background-color: #33cb45;
+  width: 150px;
   height: 60px;
+  font-size: calc(5px + 1vmin);
 }
 
 .button {
-  width: 100px;
+  min-width: 150px;
   height: 60px;
+  font-size: calc(5px + 1vmin);
+}
+.button :disabled,
+button[disabled] {
+  background-color: #b12946;
+  color: white;
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.row {
   margin: 20px;
+  /*border-color: #2196f3;*/
+  /*border-style: solid;*/
+  /*border-width: medium;*/
+  /*border-radius: 10px;*/
 }
 
 .column-sum {
   margin: 20px;
-  width: 500px;
   font-size: calc(5px + 2vmin);
+  width: 60%;
+  /*border-style: solid;*/
+  /*border-color: indianred;*/
+  /*border-width: 3px;*/
 }
 
 .column-sum > p {
@@ -46,19 +54,10 @@
   text-align: right;
 }
 
-.body {
+.Tattoo-page {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.header {
-  width: 60%;
-  font-size: calc(5px + 2vmin);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .input {
@@ -67,4 +66,18 @@
 }
 
 .input-label {
+}
+
+.Tattoo-summary {
+  display: flex;
+  width: 100%;
+}
+
+.Tattoo-advanced {
+  margin: 20px;
+  /*border-style: solid;*/
+  /*border-color: #33cb45;*/
+  /*border-width: 3px;*/
+  flex-grow: 1;
+  width: 40%;
 }
